@@ -396,3 +396,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+!src/*/Properties/PublishProfiles/*.pubxml
+!src/*/*_TemporaryKey.pfx
