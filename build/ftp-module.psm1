@@ -1,10 +1,10 @@
 # Function for uploading files
 function Upload-ToFtp {
 	param (
-		[string]$localFilePath,
-		[string]$ftpFilePath,
-		[string]$ftpUser,
-		[string]$ftpPassword
+		[Parameter(Position=0, Mandatory=$true)][string]$localFilePath,
+		[Parameter(Position=1, Mandatory=$true)][string]$ftpFilePath,
+		[Parameter(Position=2, Mandatory=$true)][string]$ftpUser,
+		[Parameter(Position=3, Mandatory=$true)][string]$ftpPassword
 	)
 	 Write-Host "Upload: $localFilePath"
 	 Write-Host "     -> $ftpFilePath"
@@ -25,9 +25,9 @@ function Upload-ToFtp {
 # Function for creating directories on the FTP server
 function Create-FtpDirectory {
 	param (
-		[string]$path,
-		[string]$ftpUser,
-		[string]$ftpPassword
+		[Parameter(Position=0, Mandatory=$true)][string]$path,
+		[Parameter(Position=1, Mandatory=$true)][string]$ftpUser,
+		[Parameter(Position=2, Mandatory=$true)][string]$ftpPassword
 	)
 	Write-Host "MkDir:  $path"
 	
@@ -61,11 +61,11 @@ function Publish-ToFTP {
 	Get-ChildItem -Path $localPath -Recurse | ForEach-Object {
 		$fullname = $_.FullName
 		$relativePath = $fullName.Substring($localPath.Length + 1).Replace("\", "/")
-		$fp = "$ftpPath/$relativePath"
+		$p = "$ftpPath/$relativePath"
 		if ($_.PSIsContainer) {            
-			Create-FtpDirectory -path $fp, -ftpUser $ftpUser, -ftpPassword $ftpPassword
+			Create-FtpDirectory $p $ftpUser $ftpPassword
 		} else {            
-			Upload-ToFtp -localFilePath $_.FullName -ftpFilePath $fp, -ftpUser $ftpUser, -ftpPassword $ftpPassword
+			Upload-ToFtp $_.FullName $p $ftpUser $ftpPassword
 		}
 	}
 }
