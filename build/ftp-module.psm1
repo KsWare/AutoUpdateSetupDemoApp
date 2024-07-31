@@ -48,7 +48,8 @@ function Create-FtpDirectory {
 }
 
 # Recurse through directories and upload files
-function Ftp-Upload {
+# EXPORT
+function Upload-ToFTP {
 	[CmdletBinding()]
 	param (
 		[Parameter(Position=0, Mandatory=$true)][string]$localPath,
@@ -62,11 +63,11 @@ function Ftp-Upload {
 		$relativePath = $fullName.Substring($localPath.Length + 1).Replace("\", "/")
 		$fp = "$ftpPath/$relativePath"
 		if ($_.PSIsContainer) {            
-			Create-FtpDirectory -d $fp, -ftpUser $ftpUser, -ftpPassword $ftpPassword
+			Create-FtpDirectory -path $fp, -ftpUser $ftpUser, -ftpPassword $ftpPassword
 		} else {            
 			Upload-ToFtp -localFilePath $_.FullName -ftpFilePath $fp, -ftpUser $ftpUser, -ftpPassword $ftpPassword
 		}
 	}
 }
 
-Export-ModuleMember -Function Ftp-Upload
+Export-ModuleMember -Function Upload-ToFTP
