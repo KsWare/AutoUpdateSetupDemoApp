@@ -49,7 +49,7 @@ function Create-FtpDirectory {
 
 # Recurse through directories and upload files
 # EXPORT
-function Upload-ToFTP {
+function Publish-ToFTP {
 	[CmdletBinding()]
 	param (
 		[Parameter(Position=0, Mandatory=$true)][string]$localPath,
@@ -70,4 +70,4 @@ function Upload-ToFTP {
 	}
 }
 
-Export-ModuleMember -Function Upload-ToFTP
+Export-ModuleMember -Function Publish-ToFTP
