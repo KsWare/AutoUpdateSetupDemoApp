@@ -92,7 +92,7 @@ function Update-AppVeyorSettings {
 function Update-Version {
 	[CmdletBinding()]param ()
 
-    if($env:isPR) { 
+    if($env:isPR -eq $true) { 
         Extract-VersionsFormat
         Write-Output ("INFO: Pull Request detected. skip Update-Version.")
     }
