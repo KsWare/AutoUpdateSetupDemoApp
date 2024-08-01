@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoUpdateSetupDemoApp", "AutoUpdateSetupDemoApp\AutoUpdateSetupDemoApp.csproj", "{08C99F37-3A4C-447F-9699-ECB6835083E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoUpdateSetupDemoApp", "AutoUpdateSetupDemoApp\AutoUpdateSetupDemoApp.csproj", "{08C99F37-3A4C-447F-9699-ECB6835083E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{4BD0708B-802D-4D95-BB7A-26F28CA1D061}"
+	ProjectSection(SolutionItems) = preProject
+		..\build\ftp-module.psm1 = ..\build\ftp-module.psm1
+		..\build\Update-Version.psm1 = ..\build\Update-Version.psm1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
