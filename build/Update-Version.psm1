@@ -24,7 +24,7 @@ function Read-AppveyorSettings {
 function Extract-VersionsFormat {  
     $currentVersion = $env:APPVEYOR_BUILD_VERSION
     $env:VersionSegmentCount = $($currentVersion.Split(".")).Count
-    $env:buildVersion = $env:APPVEYOR_BUILD_VERSION -replace '\..*$', ''
+    $env:buildVersion = $env:APPVEYOR_BUILD_VERSION -replace '\.[^.]*$$', ''
     $env:buildNumber = $env:APPVEYOR_BUILD_NUMBER
    	Write-Output "Current version: $env:buildVersion.* / $($currentVersionSegments.Count) parts"
 }
