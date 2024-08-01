@@ -91,33 +91,40 @@ function Update-AppVeyorSettings {
 
 function Update-Version {
 	[CmdletBinding()]param ()
+    try {
+	    Write-Output "START: Update-Version()"
+	    Write-Output "isPR: $env:isPR"
 
-	Write-Output "START: Update-Version()"
-	Write-Output "isPR: $env:isPR"
-
-    if($env:isPR -eq $true) { 
-        Extract-VersionsFormat
-        Write-Output ("INFO: Pull Request detected. skip Update-Version.")
-    }
-    else {
-        $isPR = $env:isPR
-	    Write-Output "env:VersionFile: env:VersionFile"
+        if($env:isPR -eq $true) { 
+            Write-Output "A"
+            Extract-VersionsFormat
+            Write-Output ("INFO: Pull Request detected. skip Update-Version.")
+        }
+        else {
+            Write-Output "B"
+            $isPR = $env:isPR
+	        Write-Output "env:VersionFile: $env:VersionFile"
 	
-        Init-AppVeyorApiRequest 	
-        Read-AppVeyorSettings	
-	    Extract-VersionsFormat
-        $newVersion = Get-VersionFromFile
-        if(-not $newVersion) { return }    
-        $env:buildVersion = $newVersion
-        if(Test-NewVersionIsGreater) { Reset-BuildNumber }
-        Update-AppVeyorSettings
-        Update-AppveyorBuild -Version "$env:buildVersion.$env:buildNumber$env:versionSuffix$env:versionMeta"
-    }
+            Init-AppVeyorApiRequest 	
+            Read-AppVeyorSettings	
+	        Extract-VersionsFormat
+            $newVersion = Get-VersionFromFile
+            if(-not $newVersion) { return }    
+            $env:buildVersion = $newVersion
+            if(Test-NewVersionIsGreater) { Reset-BuildNumber }
+            Update-AppVeyorSettings
+            Update-AppveyorBuild -Version "$env:buildVersion.$env:buildNumber$env:versionSuffix$env:versionMeta"
+        }
 	
-    Write-Output "env:APPVEYOR_BUILD_VERSION: $env:APPVEYOR_BUILD_VERSION"
-	Write-Output "env:buildVersion: $env:buildVersion"
-	Write-Output "env:buildNumber: $env:buildNumber"
-	Write-Output "END: Update-Version()"
+        Write-Output "env:APPVEYOR_BUILD_VERSION: $env:APPVEYOR_BUILD_VERSION"
+	    Write-Output "env:buildVersion: $env:buildVersion"
+	    Write-Output "env:buildNumber: $env:buildNumber"
+	    Write-Output "END: Update-Version()"
+    catch {
+        Write-Output "ERROR: $($_.Exception.Message)"
+        Write-Output "ERROR: $($_.Exception.StackTrace)"
+        exit 1
+    }
 }
 
 Export-ModuleMember -Function Update-Version
