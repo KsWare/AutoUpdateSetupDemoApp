@@ -105,7 +105,7 @@ function Update-Version {
         Init-AppVeyorApiRequest 	
         Read-AppVeyorSettings	
 	    Extract-VersionsFormat
-        var $newVersion = Get-VersionFromFile
+        $newVersion = Get-VersionFromFile
         if(-not $newVersion) { return }    
         $env:buildVersion = $newVersion
         if(Test-NewVersionIsGreater) { Reset-BuildNumber }
