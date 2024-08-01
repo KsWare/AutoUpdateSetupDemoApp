@@ -120,6 +120,7 @@ function Update-Version {
 	    Write-Output "env:buildVersion: $env:buildVersion"
 	    Write-Output "env:buildNumber: $env:buildNumber"
 	    Write-Output "END: Update-Version()"
+    }
     catch {
         Write-Output "ERROR: $($_.Exception.Message)"
         Write-Output "ERROR: $($_.Exception.StackTrace)"
