@@ -99,9 +99,11 @@ function Update-Version {
     if($isPR -eq $false) {
         Update-AppveyorBuild -Version "$buildVersion.$buildNumber$versionSuffix$meta"
     }
-    $env:buildVersion = $buildVersion
-    $env:buildNumber = $buildNumber
+
     Write-Output "APPVEYOR_BUILD_VERSION: $env:APPVEYOR_BUILD_VERSION"
+	
+	[System.Environment]::SetEnvironmentVariable('buildVersion', $buildVersion, [System.EnvironmentVariableTarget]::User)
+	[System.Environment]::SetEnvironmentVariable('buildNumber', $buildNumber, [System.EnvironmentVariableTarget]::User)
 }
 
 #Export-ModuleMember -Function Update-Version
