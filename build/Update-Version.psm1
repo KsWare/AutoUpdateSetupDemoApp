@@ -1,6 +1,9 @@
 function Update-Version {
 	[CmdletBinding()]
+	
 	$isPR = $env:isPR
+	Write-Output "START: Update-Version()"
+	Write-Output "isPR: $isPR"
 	
 	# Init AppVeyor API request 
 	$apiUrl = 'https://ci.appveyor.com/api'
@@ -100,10 +103,13 @@ function Update-Version {
     if($isPR -eq $false) {
         Update-AppveyorBuild -Version "$buildVersion.$buildNumber$versionSuffix$meta"
     }
-
-    Write-Output "APPVEYOR_BUILD_VERSION: $env:APPVEYOR_BUILD_VERSION"
 	$env:buildVersion=$buildVersion
 	$env:buildNumber=$buildNumber
+	
+    Write-Output "env:APPVEYOR_BUILD_VERSION: $env:APPVEYOR_BUILD_VERSION"
+	Write-Output "env:buildVersion: $env:buildVersion"
+	Write-Output "env:buildNumber: $env:buildNumber"
+	Write-Output "END: Update-Version()"
 }
 
 Export-ModuleMember -Function Update-Version
