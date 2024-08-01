@@ -1,4 +1,5 @@
 function Update-Version {
+	[CmdletBinding()]
 	$isPR = $env:isPR
 	
 	# Init AppVeyor API request 
@@ -101,10 +102,8 @@ function Update-Version {
     }
 
     Write-Output "APPVEYOR_BUILD_VERSION: $env:APPVEYOR_BUILD_VERSION"
-	
-	[System.Environment]::SetEnvironmentVariable('buildVersion', $buildVersion, [System.EnvironmentVariableTarget]::User)
-	[System.Environment]::SetEnvironmentVariable('buildNumber', $buildNumber, [System.EnvironmentVariableTarget]::User)
+	$env:buildVersion=$buildVersion
+	$env:buildNumber=$buildNumber
 }
 
-#Export-ModuleMember -Function Update-Version
-Update-Version
+Export-ModuleMember -Function Update-Version
